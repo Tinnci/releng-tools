@@ -290,7 +290,17 @@ apt-get update
 # Install build dependencies
 info "Installing build dependencies"
 
-mk-build-deps --remove --install --tool "apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends --yes" debian/control
+(
+srcname=$(dpkg-parsechangelog -S Source)
+
+cleanup() {
+        dpkg --remove ${srcname}-build-deps || true
+}
+trap cleanup EXIT
+
+mk-build-deps debian/control
+apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends --yes -f install ./${srcname}-build-deps_*.deb
+)
 
 # Remove clutter
 rm -f ${package_name}-build-deps_*.*
