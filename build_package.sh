@@ -396,7 +396,9 @@ fi
 # Finally build the package
 info "Building package"
 
-ARGS="--no-lintian -d -sa --no-sign --jobs=$(nproc)"
+RELENG_JOBS="${RELENG_JOBS:-$(nproc)}"
+[[ "${RELENG_JOBS}" =~ ^[1-9][0-9]*$ ]] || error "RELENG_JOBS must be a positive integer"
+ARGS="--no-lintian -d -sa --no-sign --jobs=${RELENG_JOBS}"
 if [ "${RELENG_FULL_BUILD}" == "yes" ]; then
 	# Full build, build source,any,all
 	ARGS="${ARGS} -F"

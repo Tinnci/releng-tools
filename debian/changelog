@@ -1,0 +1,5 @@
+releng-tools (70+t870.1) trixie; urgency=medium
+
+  * Maintain the T870 build tools in the Tinnci fork.
+
+ -- Tinnci <noreply@github.com>  Tue, 03 Nov 2026 19:00:00 +0800
